@@ -10,9 +10,9 @@ class LogLibraryUtils {
     private  var activity=Activity()
     private var application=Application()
 
-    private lateinit var hardWareDataUtils: HardWareDataUtils
+    private  var hardWareDataUtils=HardWareDataUtils(null)
 
-    private lateinit var errorUtils: ErrorUtils
+    private var errorUtils=ErrorUtils(null)
 
     private lateinit var navigationListener:NavigationListener
     fun initialiseApplication(app:Application){
