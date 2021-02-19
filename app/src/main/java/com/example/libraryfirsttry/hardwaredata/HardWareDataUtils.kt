@@ -14,29 +14,37 @@ import androidx.appcompat.app.AppCompatActivity
 
 class HardWareDataUtils(app: Activity?) {
 
-    val TYPE_WIFI = 1
-    val TYPE_MOBILE = 0
-    val UNDIFINED = -1
+    val TYPE_WIFI = "WIFI"
+    val TYPE_MOBILE = "MOBILE DATA"
+    val UNDIFINED = "UNDIFNED"
 
     private var activity: Activity? = null
 
+    private var networkType:String=this.UNDIFINED
+    private var bataryLevel:String=""
+
     init {
         this.activity = app
+        networkType=checkConnection()
+        bataryLevel=batarryLevel()
     }
 
-
+    /**
+     * Bu method network ün değiştiğini dinliyor.
+     * Kullanıcı uygulama içerisindeyken wifi 'den mobil dataya gecerse
+     * yanlıs bilgi gonderilmemesi için ekledim
+     */
     fun netoworkCallBackListener(){
-
         val networkCallback: ConnectivityManager.NetworkCallback =
                 object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
+                        networkType=checkConnection()
                         Log.d("logLibrary", "Netowrk changed")
-                        network
                     }
 
                     override fun onLost(network: Network) {
                         Log.d("logLibrary", "Netowork lost")
-                        network
+
                     }
                 }
 
@@ -52,7 +60,10 @@ class HardWareDataUtils(app: Activity?) {
         }
     }
 
-    fun checkConnection(): Int {
+    /**
+     * Developer gerektiği takdirde direk cagırabilir.
+     */
+    fun checkConnection(): String {
         val connMgr = activity?.getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connMgr != null) {
             val activeNetworkInfo = connMgr.activeNetworkInfo
@@ -72,6 +83,9 @@ class HardWareDataUtils(app: Activity?) {
     }
 
 
+    /**
+     * Developer gerektiği takdirde direk cagırabilir.
+     */
     fun batarryLevel():String{
         val bm= activity?.getSystemService(BATTERY_SERVICE) as BatteryManager
         val batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)

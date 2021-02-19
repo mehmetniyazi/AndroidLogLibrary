@@ -9,35 +9,50 @@ class NavigationListener(application: Application) {
     //aynısı fragment içinde bulunmalı
     
 
+
+    /**bu class sayesinde tum activitylerin lifecycyclarını listenlayabiliyoruz
+     * .Bu sayede yapılan her işlemi
+     * kayıt edebiliriz orneğin ben report stringin ekledim tum adımlarını ve
+     * bu sayede hangi sayfaları gezediğini loglayabiliriz.
+     *
+    **/
     private var application:Application
+
+    private var report:String=""
+
     init {
         this.application=application
+        setupActivityListener()
+    }
+
+    fun getReport():String{
+        return report
     }
 
     private fun setupActivityListener() {
         application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                var d=""
+                report+=activity.toString()+"Created +\n"
             }
             override fun onActivityStarted(activity: Activity) {
-                var d=""
+                report+=activity.toString()+"Started \n"
             }
             override fun onActivityResumed(activity: Activity) {
-                var d=""
+                report+=activity.toString()+"Resumed \n"
             }
 
             override fun onActivityPaused(activity: Activity) {
-                var d=""
+                report+=activity.toString()+"Paused \n"
             }
 
             override fun onActivityStopped(activity: Activity) {
-                var d=""
+                report+=activity.toString()+"Stopped \n"
             }
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                var d=""
+                report+=activity.toString()+"OnSavedInstanceState \n"
             }
             override fun onActivityDestroyed(activity: Activity) {
-                var d=""
+                report+=activity.toString()+"Destroyed \n"
             }
         })
     }
