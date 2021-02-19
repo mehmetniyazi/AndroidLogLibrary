@@ -10,15 +10,34 @@ class LogLibraryUtils {
     private  var activity=Activity()
     private var application=Application()
 
+    private lateinit var hardWareDataUtils: HardWareDataUtils
 
+    private lateinit var errorUtils: ErrorUtils
+
+    private lateinit var navigationListener:NavigationListener
     fun initialiseApplication(app:Application){
         this.application=app
-        NavigationListener(application)
+        this.navigationListener=NavigationListener(application)
     }
 
     fun initialiseActivity(activity: Activity){
         this.activity=activity
-        ErrorUtils(this.activity)
-        HardWareDataUtils(this.activity)
+        this.errorUtils=ErrorUtils(this.activity)
+        this.hardWareDataUtils=HardWareDataUtils(this.activity)
     }
+
+
+    fun getBatteryLevel():String{
+        return hardWareDataUtils.batteryLevel()
+    }
+
+    fun getNetworkType():String{
+        return hardWareDataUtils.getNetworkType()
+    }
+
+    fun getNavigationReport():String{
+        return navigationListener.getReport()
+    }
+
+
 }

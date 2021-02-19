@@ -26,7 +26,15 @@ class HardWareDataUtils(app: Activity?) {
     init {
         this.activity = app
         networkType=checkConnection()
-        bataryLevel=batarryLevel()
+        bataryLevel=batteryLevel()
+    }
+
+    fun getNetworkType():String{
+        return this.networkType
+    }
+
+    fun getBatteryLevel():String{
+        return this.bataryLevel
     }
 
     /**
@@ -86,7 +94,7 @@ class HardWareDataUtils(app: Activity?) {
     /**
      * Developer gerektiği takdirde direk cagırabilir.
      */
-    fun batarryLevel():String{
+    fun batteryLevel():String{
         val bm= activity?.getSystemService(BATTERY_SERVICE) as BatteryManager
         val batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
         return batLevel.toString()
